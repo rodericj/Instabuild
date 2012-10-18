@@ -2,8 +2,11 @@ import commands
 import time
 
 ## Instabuild takes an xcode project, builds it, signs it, and sends it to testflight.
+
 ## Author: Addison Hardy
 ## http://github.com/addisonhardy
+
+## MIT License
 
 ################################
 
@@ -42,10 +45,9 @@ print "Building app xcode project..."
 
 time.sleep(4)
 
-print commands.getstatusoutput("/usr/bin/xcrun -sdk iphoneos PackageApplication -v " + xcode_build_path + " -o " + output_path)
+commands.getstatusoutput("/usr/bin/xcrun -sdk iphoneos PackageApplication -v " + xcode_build_path + " -o " + output_path)
 
 print "Creating output .ipa file..."
 
 testflight = commands.getoutput("curl http://testflightapp.com/api/builds.json -F file=@" + output_path + " -F api_token='" + testflight_key + "' -F team_token='" + testflight_team_token + "' -F notes='" + testflight_build_notes + "' -F notify=" + testflight_notify + " -F distribution_lists='" + testflight_dist_lists + "'")
 print "Uploading to TestFlight..."
-print testflight
