@@ -46,6 +46,6 @@ commands.getstatusoutput("/usr/bin/xcrun -sdk iphoneos PackageApplication -v " +
 
 print "Creating output .ipa file..."
 
-testflight = commands.getoutput("curl http://testflightapp.com/api/builds.json -F file=" + output_path + " -F api_token='" + api_token + "' -F team_token='" + team_token + "' -F notes='" + testflight_build_notes + "' -F notify=" + testflight_notify + " -F distribution_lists='" + testflight_dist_lists + "'")
+testflight = commands.getoutput("curl http://testflightapp.com/api/builds.json -F file=@" + output_path + " -F api_token='" + testflight_key + "' -F team_token='" + testflight_team_token + "' -F notes='" + testflight_build_notes + "' -F notify=" + testflight_notify + " -F distribution_lists='" + testflight_dist_lists + "'")
 
 print "Uploading to TestFlight..."
