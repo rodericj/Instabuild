@@ -19,6 +19,12 @@ xcode_proj_path = project_path + "###" + ".xcodeproj"
 # Path to .app file in /build/Release-iphoneos/ folder in app folder
 xcode_build_path = project_path + "build/Release-iphoneos/" + "###" + ".app"
 
+# Path to dSYM.zip file in app folder
+xcode_dsym_path = "###"
+
+# Xcode build target
+xcode_build_target = "###"
+
 # Path to output the built .ipa
 output_path = "###.ipa"
 
@@ -39,7 +45,7 @@ testflight_build_notes = "###"
 
 ################################
 
-commands.getstatusoutput("xcodebuild -project " + xcode_proj_path + " -alltargets")
+commands.getstatusoutput("xcodebuild -project " + xcode_proj_path + " -target " + xcode_build_target)
 
 print "Building app xcode project..."
 
@@ -49,6 +55,6 @@ commands.getstatusoutput("/usr/bin/xcrun -sdk iphoneos PackageApplication -v " +
 
 print "Creating output .ipa file..."
 
-testflight = commands.getoutput("curl http://testflightapp.com/api/builds.json -F file=@" + output_path + " -F api_token='" + testflight_key + "' -F team_token='" + testflight_team_token + "' -F notes='" + testflight_build_notes + "' -F notify=" + testflight_notify + " -F distribution_lists='" + testflight_dist_lists + "'")
+testflight = commands.getoutput("curl http://testflightapp.com/api/builds.json -F file=@" + output_path + " -F dsym=@" + xcode_dsym_path + " -F api_token='" + testflight_key + "' -F team_token='" + testflight_team_token + "' -F notes='" + testflight_build_notes + "' -F notify=" + testflight_notify + " -F distribution_lists='" + testflight_dist_lists + "'")
 
 print "Uploading to TestFlight..."
